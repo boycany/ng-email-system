@@ -1,21 +1,23 @@
-<h3>Create an account: </h3>
-<form class="ui form" [formGroup]="authForm">
-    <div class="field">
-        <label for="username">Username</label>
-        <input formControlName="username" id="username" />
-    </div>
-    {{ authForm.get('username').errors | json }}
-    <div class="field">
-        <label for="password">Password</label>
-        <input formControlName="password" id="password" />
-    </div>
-    {{ authForm.get('password').errors | json }}
-    <div class="field">
-        <label for="passwordConfirmation">Password Confirmation</label>
-        <input formControlName="passwordConfirmation" id="passwordConfirmation" />
-    </div>
-    {{ authForm.get('passwordConfirmation').errors | json }}
-    <button class="ui primary button submit">Submit</button>
-    <br>
-    {{ authForm.errors | json }}
-</form>
+<div class="ui container segment">
+    <h3>Create an account: </h3>
+    <form class="ui form" [formGroup]="authForm">
+        <app-input label="Username" fieldId="username" [control]="authForm.controls['username']" inputType="text">
+        </app-input>
+        <app-input label="Password" fieldId="password" [control]="authForm.controls['password']" inputType="password">
+        </app-input>
+        <app-input label="Password Confirmation" fieldId="passwordConfirmation"
+            [control]="authForm.controls['passwordConfirmation']" inputType="password">
+        </app-input>
+
+        <div class="ui red basic message"
+            *ngIf="authForm.get('password').touched && authForm.get('passwordConfirmation').touched && authForm.errors">
+            <!-- div 層設定為要兩個 passowrd 的 touch 事件都接受到並且有 error 才觸發此錯誤訊息 -->
+            <p *ngIf="authForm.errors['passwordsDontMatch']">
+                Password and Password Confirmation must match.
+            </p>
+        </div>
+        <div>
+            <button class="ui primary button submit">Submit</button>
+        </div>
+    </form>
+</div>

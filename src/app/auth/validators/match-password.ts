@@ -6,6 +6,7 @@ export class MatchPassword implements Validator {
   validate(formGroup: FormGroup) {
     // validate 函式傳進來的參數決定看是要驗證 FormGroup 還是 FormControl 類型，
     // 傳進 Abstract 類型的話，則是兩種都接受
+    // console.log('formGroup.value :>> ', formGroup.value);
 
     const { password, passwordConfirmation } = formGroup.value;
 
