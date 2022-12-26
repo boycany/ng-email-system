@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
+import { AuthService, SignupCredentials } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -37,7 +38,31 @@ export class SignupComponent {
 
   constructor(
     private matchPassword: MatchPassword,
-    private uniqueUsername: UniqueUsername
+    private uniqueUsername: UniqueUsername,
+    private authService: AuthService
   ) {}
   //use Dependency Injection, so I can reference MatchPassword to my SignupComponent
+
+  onSubmit() {
+    if (this.authForm.invalid) {
+      return;
+    }
+    console.log('this.authForm.value :>> ', this.authForm.value);
+
+    this.authService
+      .signup(this.authForm.value as SignupCredentials)
+      .subscribe({
+        next: (response) => {
+          //Navigate to some other route.
+          console.log('signup response: >> ', response);
+        },
+        error: (err) => {
+          if (!err.status) {
+            this.authForm.setErrors({ noConnection: true });
+          } else {
+            this.authForm.setErrors({ unknownError: true });
+          }
+        },
+      });
+  }
 }
