@@ -30,4 +30,8 @@ export class AppComponent {
    * }
    *
    */
+
+  ngOnInit(){
+    this.authService.checkAuth().subscribe()
+  }
 }

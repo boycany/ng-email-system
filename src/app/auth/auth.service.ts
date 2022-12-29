@@ -37,10 +37,31 @@ export class AuthService {
 
   signup(credentials: SignupCredentials) {
     return this.http
-      .post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials)
+      .post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials 
+      // ,{
+      //   withCredentials: true, 
+        //設定 withCredentials 為 true，client 端就會帶著 Server 傳來的 Cookie
+      // }
+      )
       .pipe(
         tap(() => {
           this.signedin$.next(true);
+        })
+      );
+  }
+
+  checkAuth(){
+    return this.http
+      .get(
+        `${this.rootUrl}/auth/signedin`
+        // ,{
+        //   withCredentials: true,
+        //設定 withCredentials 為 true，client 端就會帶著 Server 傳來的 Cookie
+        // }
+      )
+      .pipe(
+        tap((response) => {
+          console.log('response: >> ', response);
         })
       );
   }
