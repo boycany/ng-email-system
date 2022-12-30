@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
 import { AuthService, SignupCredentials } from '../auth.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-signup',
@@ -39,7 +40,8 @@ export class SignupComponent {
   constructor(
     private matchPassword: MatchPassword,
     private uniqueUsername: UniqueUsername,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
   //use Dependency Injection, so I can reference MatchPassword to my SignupComponent
 
@@ -55,6 +57,7 @@ export class SignupComponent {
         next: (response) => {
           //Navigate to some other route.
           console.log('signup response: >> ', response);
+          this.router.navigateByUrl('/inbox')
         },
         error: (err) => {
           if (!err.status) {
