@@ -22,6 +22,11 @@ interface SignedinResponse {
   username: string
 }
 
+export interface SigninCredentials {
+  username: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -42,11 +47,13 @@ export class AuthService {
 
   signup(credentials: SignupCredentials) {
     return this.http
-      .post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials 
-      // ,{
-      //   withCredentials: true, 
+      .post<SignupResponse>(
+        `${this.rootUrl}/auth/signup`,
+        credentials
+        // ,{
+        //   withCredentials: true,
         //設定 withCredentials 為 true，client 端就會帶著 Server 傳來的 Cookie
-      // }
+        // }
       )
       .pipe(
         tap(() => {
@@ -55,7 +62,7 @@ export class AuthService {
       );
   }
 
-  checkAuth(){
+  checkAuth() {
     return this.http
       .get<SignedinResponse>(
         `${this.rootUrl}/auth/signedin`
@@ -66,17 +73,24 @@ export class AuthService {
       )
       .pipe(
         tap(({ authenticated }) => {
-          this.signedin$.next(authenticated)
+          this.signedin$.next(authenticated);
         })
       );
   }
 
-  signout(){
-    return this.http.post(`${this.rootUrl}/auth/signout`, {})
-      .pipe(
-        tap(()=> {
-          this.signedin$.next(false)
-        })
-      )
+  signout() {
+    return this.http.post(`${this.rootUrl}/auth/signout`, {}).pipe(
+      tap(() => {
+        this.signedin$.next(false);
+      })
+    );
+  }
+
+  signin(credentials: SigninCredentials) {
+    return this.http.post(`${this.rootUrl}/auth/signin`, credentials).pipe(
+      tap(() => {
+        this.signedin$.next(true);
+      })
+    );
   }
 }
