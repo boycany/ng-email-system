@@ -2,10 +2,14 @@
     <label [for]="fieldId">
         {{ label }}
     </label>
-    <input [formControl]="control" [id]="fieldId" [type]="inputType" />
+    <input *ngIf="controlType === 'input'" [formControl]="control" [id]="fieldId" [type]="inputType" />
+    <textarea *ngIf="controlType === 'textarea'" [formControl]="control" [id]="fieldId" cols="30" rows="10"></textarea>
     <div class="ui pointing red basic label" *ngIf="showErrors()">
         <p *ngIf="control.errors['required']">
             ・Value is required
+        </p>
+        <p *ngIf="control.errors['email']">
+            ・Enter a valid email
         </p>
         <p *ngIf="control.errors['minlength']">
             ・Value you entered is

@@ -10,7 +10,8 @@ export class InputComponent {
   @Input() inputType: string;
   @Input() label: string;
   @Input() fieldId: string;
-  @Input() control: FormControl;
+  @Input() control: FormControl<any>;
+  @Input() controlType = "input"
 
   showErrors() {
     const { dirty, touched, errors } = this.control;

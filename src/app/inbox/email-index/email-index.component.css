@@ -1,6 +1,6 @@
-.item a {
+.item > a {
     color: black;
-    /* padding: 5px; */
+    padding: 5px;
 }
 
 a.active {

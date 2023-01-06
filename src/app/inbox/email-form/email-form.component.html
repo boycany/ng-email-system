@@ -1,0 +1,17 @@
+<form [formGroup]="emailForm" class="ui form" (ngSubmit)="onSubmit()">
+    <app-input label="To" fieldId="to" [control]="$any(emailForm.get('to'))" inputType="email"
+        *ngIf="emailForm.controls['to']">
+    </app-input>
+    <app-input label="From" fieldId="from" [control]="$any(emailForm.get('from'))" inputType="email"
+        *ngIf="emailForm.controls['from']">
+    </app-input>
+    <app-input label="Subject" fieldId="subject" [control]="$any(emailForm.get('subject'))" inputType="text"
+        *ngIf="emailForm.controls['subject']">
+    </app-input>
+    <app-input label="Content" fieldId="content" [control]="$any(emailForm.get('text'))" controlType="textarea"
+        *ngIf="emailForm.controls['text']">
+    </app-input>
+    <!-- <div modalFooter> -->
+        <button class="ui primary button">Send</button>
+    <!-- </div> -->
+</form>

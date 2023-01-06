@@ -13,6 +13,7 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {
     this.signedin$ = this.authService.signedin$;
+    
   }
 
   /**
@@ -32,9 +33,15 @@ export class AppComponent {
    */
 
   ngOnInit(){
-    this.authService.checkAuth().subscribe()
+    this.authService.checkAuth().subscribe(response=>{
+      console.log(response)
+    })
     // setTimeout(()=>{
     //   this.authService.signout().subscribe()
     // }, 5000)
+  }
+
+  get username(){
+    return this.authService.username
   }
 }
